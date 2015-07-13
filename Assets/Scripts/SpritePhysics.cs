@@ -7,6 +7,7 @@ public class SpritePhysics : MonoBehaviour {
 	[SerializeField] private bool _debugDrawRays = false;
 
 	public Vector3 vel { get; set; }
+	public bool IsOnGround { get; private set; }
 
 	private BoxCollider2D _collider;
 	private List<Vector2> _offsets = new List<Vector2>();
@@ -14,6 +15,7 @@ public class SpritePhysics : MonoBehaviour {
 	private const float kEpsilon = 0.001f;
 
 	void Start() {
+		IsOnGround = false;
 		_collider = GetComponent<BoxCollider2D>();
 
 		for (int i = 0; i < _numHorizontalRays; i++) {
@@ -46,6 +48,8 @@ public class SpritePhysics : MonoBehaviour {
 		v += (Vector3)Physics2D.gravity * Time.fixedDeltaTime;
 		Vector3 toMove = v * Time.fixedDeltaTime;
 
+		IsOnGround = false;
+
 		//RaycastHit2D? minHit = FindCollision(toMove);
 		//if (minHit != null) {
 		//	toMove = v.normalized * (minHit.Value.distance);
@@ -62,6 +66,7 @@ public class SpritePhysics : MonoBehaviour {
 			v.y = 0;
 			float d = yHit.Value.distance - kEpsilon;
 			if (d < 0) { d = 0; }
+			IsOnGround = toMove.y * Physics2D.gravity.y > 0;
 			toMove.y = d * Mathf.Sign(toMove.y);
 		}
 		vel = v;
