@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class SpritePhysics : MonoBehaviour {
 	[SerializeField] private int _numHorizontalRays = 3;
+	[SerializeField] private int _numVerticalRays = 3;
 	[SerializeField] private bool _debugDrawRays = false;
 
 	public Vector3 vel { get; set; }
@@ -20,8 +21,15 @@ public class SpritePhysics : MonoBehaviour {
 
 		for (int i = 0; i < _numHorizontalRays; i++) {
 			float x = _collider.bounds.extents.x * (2 * i - _numHorizontalRays + 1) / (_numHorizontalRays - 1);
-			float y = -_collider.bounds.extents.y;
+			float y = _collider.bounds.extents.y;
 			_offsets.Add(new Vector2(x, y));
+			_offsets.Add(new Vector2(x, -y));
+		}
+		for (int i = 1; i < _numVerticalRays - 1; i++) {
+			float x = _collider.bounds.extents.x;
+			float y = _collider.bounds.extents.y * (2 * i - _numVerticalRays + 1) / (_numVerticalRays - 1);
+			_offsets.Add(new Vector2(x, y));
+			_offsets.Add(new Vector2(-x, y));
 		}
 	}
 		
@@ -48,7 +56,11 @@ public class SpritePhysics : MonoBehaviour {
 		v += (Vector3)Physics2D.gravity * Time.fixedDeltaTime;
 		Vector3 toMove = v * Time.fixedDeltaTime;
 
-		IsOnGround = false;
+		float g = Physics2D.gravity.y;
+
+		if (v.y * g < 0 || v.y * Mathf.Sign(g) > 0.15f * Mathf.Abs(g)) {
+			IsOnGround = false;
+		}
 
 		//RaycastHit2D? minHit = FindCollision(toMove);
 		//if (minHit != null) {

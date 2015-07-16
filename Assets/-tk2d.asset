@@ -19,13 +19,13 @@ MonoBehaviour:
     spriteCollectionGUID: df5324dc08d42f74c8dcca3a78b1be56
     spriteCollectionDataGUID: f5f71cace81f18940a4588bb41d6c6e7
     spriteNames:
-    - White
+    - 
     - Big White
     spriteTextureGUIDs:
-    - 12b48adaad820624999da0cf503d6776
+    - 
     - 12b48adaad820624999da0cf503d6776
     spriteTextureTimeStamps:
-    - 1436132201.56067
+    - 0
     - 1436132201.56067
     managedSpriteCollection: 0
     loadable: 0
