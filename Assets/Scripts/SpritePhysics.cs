@@ -34,8 +34,7 @@ public class SpritePhysics : MonoBehaviour {
 	}
 		
 	void FixedUpdate() {
-		Vector3 toMove = CalculateMoveDistance();
-		UpdatePosition(toMove);
+		UpdatePosition();
 
 		if (_debugDrawRays) {
 			foreach (Vector3 offset in _offsets) {
@@ -45,16 +44,9 @@ public class SpritePhysics : MonoBehaviour {
 		}
 	}
 
-	private void UpdatePosition(Vector3 toMove) {
-		Vector3 pos = transform.position;
-		pos += toMove;
-		transform.position = pos;
-	}
-
-	private Vector3 CalculateMoveDistance() {
+	private void UpdatePosition() {
 		Vector3 v = vel;
 		v += (Vector3)Physics2D.gravity * Time.fixedDeltaTime;
-		Vector3 toMove = v * Time.fixedDeltaTime;
 
 		float g = Physics2D.gravity.y;
 
@@ -62,27 +54,33 @@ public class SpritePhysics : MonoBehaviour {
 			IsOnGround = false;
 		}
 
-		//RaycastHit2D? minHit = FindCollision(toMove);
-		//if (minHit != null) {
-		//	toMove = v.normalized * (minHit.Value.distance);
-		//}
-		RaycastHit2D? xHit = FindCollision(toMove.x * Vector2.right);
-		if (xHit != null) {
-			v.x = 0;
-			float d = xHit.Value.distance - kEpsilon;
-			if (d < 0) { d = 0; }
-			toMove.x = d * Mathf.Sign(toMove.x);
-		}
-		RaycastHit2D? yHit = FindCollision(toMove.y * Vector2.up);
-		if (yHit != null) {
-			v.y = 0;
-			float d = yHit.Value.distance - kEpsilon;
-			if (d < 0) { d = 0; }
-			IsOnGround = toMove.y * Physics2D.gravity.y > 0;
-			toMove.y = d * Mathf.Sign(toMove.y);
-		}
+		v.x = GoDir(new Vector2(v.x, 0)).x;
+		v.y = GoDir(new Vector2(0, v.y)).y;
 		vel = v;
-		return toMove;
+	}
+
+	private Vector2 GoDir(Vector2 v) {
+		bool isY = Mathf.Abs(v.y) > 0;
+		Vector3 toMove = v * Time.fixedDeltaTime;
+		RaycastHit2D? hit = FindCollision(toMove);
+		if (hit != null) {
+			v = Vector2.zero;
+			float d = hit.Value.distance - kEpsilon;
+			if (d < 0) { d = 0; }
+			if (isY) {
+				IsOnGround = toMove.y * Physics2D.gravity.y > 0;
+			}
+			float s = isY ? toMove.y : toMove.x;
+			float dist = s * d;
+			if (isY) {
+				toMove.y = dist;
+			}
+			else {
+				toMove.x = dist;
+			}
+		}
+		transform.position += toMove;
+		return v;
 	}
 
 	private RaycastHit2D? FindCollision(Vector3 toMove) {
