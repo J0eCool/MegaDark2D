@@ -20,12 +20,25 @@ MonoBehaviour:
     spriteCollectionDataGUID: f5f71cace81f18940a4588bb41d6c6e7
     spriteNames:
     - 
-    - Big White
+    - White
     spriteTextureGUIDs:
     - 
     - 12b48adaad820624999da0cf503d6776
     spriteTextureTimeStamps:
     - 0
+    - 1436132201.56067
+    managedSpriteCollection: 0
+    loadable: 0
+    assetName: 
+    version: 3
+  - name: TileSprites
+    spriteCollectionGUID: f910440a220df0047859a72f71c68e30
+    spriteCollectionDataGUID: cd1624e9d468c194db866cbffdd0133a
+    spriteNames:
+    - White
+    spriteTextureGUIDs:
+    - 12b48adaad820624999da0cf503d6776
+    spriteTextureTimeStamps:
     - 1436132201.56067
     managedSpriteCollection: 0
     loadable: 0

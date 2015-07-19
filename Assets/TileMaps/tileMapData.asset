@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: tileMapData
   m_EditorClassIdentifier: 
   tileSize: {x: .5, y: .5, z: 0}
-  tileOrigin: {x: -.00999999978, y: -.00999999978, z: 0}
+  tileOrigin: {x: 0, y: 0, z: 0}
   tileType: 0
   colorMode: 0
   sortMethod: 0
@@ -21,12 +21,7 @@ MonoBehaviour:
   useSortingLayers: 0
   tilePrefabs:
   - {fileID: 0}
-  - {fileID: 0}
   tileInfo:
-  - stringVal: 
-    intVal: 0
-    floatVal: 0
-    enablePrefabOffset: 0
   - stringVal: 
     intVal: 0
     floatVal: 0
