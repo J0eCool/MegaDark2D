@@ -15,7 +15,7 @@ GameObject:
   - 114: {fileID: 11429102}
   - 114: {fileID: 11406738}
   - 61: {fileID: 6142276}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,6 +107,7 @@ MonoBehaviour:
   _speed: 7
   _jumpHeight: 3
   _jumpReleaseDamping: .349999994
+  _bulletPrefab: {fileID: 124272, guid: 9d2d67d0536bc9646ae9ee57cdc25832, type: 2}
 --- !u!114 &11429102
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -120,6 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _numHorizontalRays: 3
   _numVerticalRays: 3
+  _ignoreGravity: 0
   _debugDrawRays: 0
 --- !u!114 &11446862
 MonoBehaviour:
