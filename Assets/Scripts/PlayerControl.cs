@@ -8,28 +8,25 @@ public class PlayerControl : MonoBehaviour {
 	[SerializeField] private float _jumpReleaseDamping = 0.35f;
 
 	private SpritePhysics _physics;
-
-	private bool _wasJumpPressed = false;
+	private InputManager _input;
 
 	void Start() {
+		_input = InputManager.Instance;
+
 		_physics = GetComponent<SpritePhysics>();
 	}
 
 	void Update() {
 		Vector3 vel = _physics.vel;
 
-		vel.x = _speed * Input.GetAxis("Horizontal");
+		vel.x = _speed * _input.X.Dir;
 
-		bool isJumpPressed = Input.GetAxis("Jump") > 0.5f;
-		bool didPress = isJumpPressed && !_wasJumpPressed;
-		bool didRelease = !isJumpPressed && _wasJumpPressed;
-		if (didPress && _physics.IsOnGround) {
+		if (_input.Jump.DidPress && _physics.IsOnGround) {
 			vel.y = JumpSpeed();
 		}
-		else if (didRelease && vel.y * Physics2D.gravity.y < 0) {
+		else if (_input.Jump.DidRelease && vel.y * Physics2D.gravity.y < 0) {
 			vel.y *= _jumpReleaseDamping;
 		}
-		_wasJumpPressed = isJumpPressed;
 
 		_physics.vel = vel;
 	}
