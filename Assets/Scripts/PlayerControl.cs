@@ -63,7 +63,7 @@ public class PlayerControl : MonoBehaviour {
 			bulletObj.transform.position = transform.position;
 			Bullet bullet = bulletObj.GetComponent<Bullet>();
 			float bulletXDir = _facingRight ? 1 : -1;
-			bullet.Init(new Vector3(bulletXDir, 0, 0));
+			bullet.Init(gameObject, new Vector3(bulletXDir, 0, 0));
 		}
 	}
 }

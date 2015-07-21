@@ -14,6 +14,8 @@ public class SpritePhysics : MonoBehaviour {
 	private BoxCollider2D _collider;
 	private List<Vector2> _offsets = new List<Vector2>();
 
+	private HashSet<GameObject> _collidedObjects = new HashSet<GameObject>();
+
 	private const float kEpsilon = 0.001f;
 	private static HashSet<int> _collidableLayers = null;
 
@@ -44,6 +46,7 @@ public class SpritePhysics : MonoBehaviour {
 		
 	void FixedUpdate() {
 		UpdatePosition();
+		SendHitMessages();
 
 		if (_debugDrawRays) {
 			foreach (Vector3 offset in _offsets) {
@@ -99,13 +102,37 @@ public class SpritePhysics : MonoBehaviour {
 			Vector3 origin = transform.position + offset;
 			RaycastHit2D[] hits = Physics2D.RaycastAll(origin, toMove.normalized, toMove.magnitude);
 			foreach (var hit in hits) {
-				if (hit.collider.gameObject != gameObject
-					&& _collidableLayers.Contains(hit.collider.gameObject.layer)
-					&& (minHit == null || hit.distance < minHit.Value.distance)) {
-					minHit = hit;
+				var hitObj = hit.collider.gameObject;
+				if (hitObj != gameObject) {
+					_collidedObjects.Add(hitObj);
+					if (_collidableLayers.Contains(hitObj.layer)
+							&& (minHit == null || hit.distance < minHit.Value.distance)) {
+						minHit = hit;
+					}
 				}
 			}
 		}
 		return minHit;
+	}
+
+	private void SendHitMessages() {
+		foreach (var obj in _collidedObjects) {
+			gameObject.SendMessage("OnCollide",
+				new CollisionData(obj),
+				SendMessageOptions.DontRequireReceiver);
+			obj.SendMessage("OnCollide",
+				new CollisionData(gameObject),
+				SendMessageOptions.DontRequireReceiver);
+		}
+
+		_collidedObjects.Clear();
+	}
+}
+
+public class CollisionData {
+	public GameObject sender;
+
+	public CollisionData(GameObject sender) {
+		this.sender = sender;
 	}
 }

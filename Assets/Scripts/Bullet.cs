@@ -8,8 +8,11 @@ public class Bullet : MonoBehaviour {
 
 	private SpritePhysics _physics;
 	private float _flownDist = 0.0f;
+	private GameObject _shooter;
 
-	public void Init(Vector3 dir) {
+	public void Init(GameObject shooter, Vector3 dir) {
+		_shooter = shooter;
+
 		_physics = GetComponent<SpritePhysics>();
 		_physics.vel = _speed * dir;
 	}
@@ -23,6 +26,12 @@ public class Bullet : MonoBehaviour {
 			if (_flownDist > _maxRange) {
 				GameObject.Destroy(gameObject);
 			}
+		}
+	}
+
+	void OnCollide(CollisionData collision) {
+		if (collision.sender != _shooter) {
+			GameObject.Destroy(gameObject);
 		}
 	}
 }
