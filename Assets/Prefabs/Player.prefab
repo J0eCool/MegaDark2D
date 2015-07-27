@@ -105,6 +105,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 7
+  _timeToMaxSpeed: .25
+  _moveOppositeMultiplier: 2.5
+  _moveReleaseMultiplier: .5
+  _moveOffGroundMultiplier: .349999994
   _jumpHeight: 3
   _jumpReleaseDamping: .349999994
   _bulletPrefab: {fileID: 124272, guid: 9d2d67d0536bc9646ae9ee57cdc25832, type: 2}

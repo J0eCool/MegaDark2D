@@ -19,7 +19,7 @@ public class InputManager : SingletonComponent<InputManager> {
 		_inputs.Add(Shoot = new Button("Shoot"));
 	}
 
-	void Update() {
+	void FixedUpdate() {
 		foreach (var input in _inputs) {
 			input.Update();
 		}

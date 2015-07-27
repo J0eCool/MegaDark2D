@@ -4,6 +4,10 @@ using System.Collections.Generic;
 
 public class PlayerControl : MonoBehaviour {
 	[SerializeField] private float _speed = 10;
+	[SerializeField] private float _timeToMaxSpeed = 0.25f;
+	[SerializeField] private float _moveOppositeMultiplier = 2.5f;
+	[SerializeField] private float _moveReleaseMultiplier = 1.0f;
+	[SerializeField] private float _moveOffGroundMultiplier = 0.35f;
 	[SerializeField] private float _jumpHeight = 3;
 	[SerializeField] private float _jumpReleaseDamping = 0.35f;
 	[SerializeField] private GameObject _bulletPrefab;
@@ -18,7 +22,7 @@ public class PlayerControl : MonoBehaviour {
 		_physics = GetComponent<SpritePhysics>();
 	}
 
-	void Update() {
+	void FixedUpdate() {
 		UpdateMovement();
 		UpdateFacing();
 		UpdateJumping();
@@ -27,7 +31,28 @@ public class PlayerControl : MonoBehaviour {
 
 	private void UpdateMovement() {
 		Vector3 vel = _physics.vel;
-		vel.x = _speed * _input.X.Dir;
+		float accel = _speed / _timeToMaxSpeed * Time.fixedDeltaTime;
+		float v = vel.x;
+		int dX = _input.X.Dir;
+
+		if (!_physics.IsOnGround) {
+			accel *= _moveOffGroundMultiplier;
+		}
+
+		float dV;
+		if (dX == 0) { // pressing no direction
+			float s = -Mathf.Sign(v);
+			float mag = Mathf.Abs(v);
+			dV = s * Mathf.Min(_moveReleaseMultiplier * accel, mag);
+		}
+		else if (v * dX >= 0) { // pressing same direction
+			dV = accel * dX;
+		}
+		else { // pressing opposite direction
+			dV = _moveOppositeMultiplier * accel * dX;
+		}
+		
+		vel.x = Mathf.Clamp(v + dV, -_speed, _speed);
 		_physics.vel = vel;
 	}
 
