@@ -27,6 +27,7 @@ public class PlayerControl : MonoBehaviour {
 		UpdateFacing();
 		UpdateJumping();
 		UpdateShooting();
+		UpdateReset();
 	}
 
 	private void UpdateMovement() {
@@ -89,6 +90,12 @@ public class PlayerControl : MonoBehaviour {
 			Bullet bullet = bulletObj.GetComponent<Bullet>();
 			float bulletXDir = _facingRight ? 1 : -1;
 			bullet.Init(gameObject, new Vector3(bulletXDir, 0, 0));
+		}
+	}
+
+	private void UpdateReset() {
+		if (_input.Reset.DidPress) {
+			Application.LoadLevel(Application.loadedLevel);
 		}
 	}
 }

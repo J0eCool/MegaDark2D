@@ -8,6 +8,7 @@ public class InputManager : SingletonComponent<InputManager> {
 
 	public Button Jump { get; private set; }
 	public Button Shoot { get; private set; }
+	public Button Reset { get; private set; }
 
 	private List<IUpdateable> _inputs = new List<IUpdateable>();
 
@@ -17,6 +18,7 @@ public class InputManager : SingletonComponent<InputManager> {
 
 		_inputs.Add(Jump = new Button("Jump"));
 		_inputs.Add(Shoot = new Button("Shoot"));
+		_inputs.Add(Reset = new Button("Reset"));
 	}
 
 	void FixedUpdate() {
