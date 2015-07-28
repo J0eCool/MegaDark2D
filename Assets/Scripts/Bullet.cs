@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Bullet : MonoBehaviour {
+public class Bullet : MonoBehaviour, ICollideable {
 	[SerializeField] private float _speed = 15.0f;
 	[SerializeField] private float _maxRange = 300.0f;
 
@@ -15,6 +15,7 @@ public class Bullet : MonoBehaviour {
 
 		_physics = GetComponent<SpritePhysics>();
 		_physics.vel = _speed * dir;
+		_physics.RegisterListener(this);
 	}
 
 	void FixedUpdate() {
@@ -29,7 +30,7 @@ public class Bullet : MonoBehaviour {
 		}
 	}
 
-	void OnCollide(CollisionData collision) {
+	public void OnCollide(CollisionData collision) {
 		if (collision.sender != _shooter) {
 			GameObject.Destroy(gameObject);
 		}

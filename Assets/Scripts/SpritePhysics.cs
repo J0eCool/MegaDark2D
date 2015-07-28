@@ -13,6 +13,7 @@ public class SpritePhysics : MonoBehaviour {
 
 	private BoxCollider2D _collider;
 	private List<Vector2> _offsets = new List<Vector2>();
+	private List<ICollideable> _collisionListeners = new List<ICollideable>();
 
 	private HashSet<GameObject> _collidedObjects = new HashSet<GameObject>();
 
@@ -46,7 +47,7 @@ public class SpritePhysics : MonoBehaviour {
 		
 	void FixedUpdate() {
 		UpdatePosition();
-		SendHitMessages();
+		FlushHitMessages();
 
 		if (_debugDrawRays) {
 			foreach (Vector3 offset in _offsets) {
@@ -115,17 +116,25 @@ public class SpritePhysics : MonoBehaviour {
 		return minHit;
 	}
 
-	private void SendHitMessages() {
-		foreach (var obj in _collidedObjects) {
-			gameObject.SendMessage("OnCollide",
-				new CollisionData(obj),
-				SendMessageOptions.DontRequireReceiver);
-			obj.SendMessage("OnCollide",
-				new CollisionData(gameObject),
-				SendMessageOptions.DontRequireReceiver);
+	private void FlushHitMessages() {
+		foreach (var other in _collidedObjects) {
+			CollidedWith(other);
+			var otherPhysics = other.GetComponent<SpritePhysics>();
+			if (otherPhysics != null) {
+				otherPhysics.CollidedWith(gameObject);
+			}
 		}
-
 		_collidedObjects.Clear();
+	}
+
+	private void CollidedWith(GameObject other) {
+		foreach (var listener in _collisionListeners) {
+			listener.OnCollide(new CollisionData(other));
+		}
+	}
+
+	public void RegisterListener(ICollideable listener) {
+		_collisionListeners.Add(listener);
 	}
 }
 
@@ -135,4 +144,8 @@ public class CollisionData {
 	public CollisionData(GameObject sender) {
 		this.sender = sender;
 	}
+}
+
+public interface ICollideable {
+	void OnCollide(CollisionData collision);
 }
