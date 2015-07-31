@@ -18,12 +18,12 @@ public class SpritePhysics : MonoBehaviour {
 	private HashSet<GameObject> _collidedObjects = new HashSet<GameObject>();
 
 	private const float kEpsilon = 0.001f;
-	private static HashSet<int> _collidableLayers = null;
+	private static HashSet<int> _physicallyCollidingLayers = null;
 
 	void Awake() {
-		if (_collidableLayers == null) {
-			_collidableLayers = new HashSet<int>();
-			_collidableLayers.Add(LayerMask.NameToLayer("Default"));
+		if (_physicallyCollidingLayers == null) {
+			_physicallyCollidingLayers = new HashSet<int>();
+			_physicallyCollidingLayers.Add(LayerMask.NameToLayer("Default"));
 		}
 	}
 
@@ -104,16 +104,29 @@ public class SpritePhysics : MonoBehaviour {
 			RaycastHit2D[] hits = Physics2D.RaycastAll(origin, toMove.normalized, toMove.magnitude);
 			foreach (var hit in hits) {
 				var hitObj = hit.collider.gameObject;
-				if (hitObj != gameObject) {
+				if (CanCollideLogically(hitObj)) {
 					_collidedObjects.Add(hitObj);
-					if (_collidableLayers.Contains(hitObj.layer)
-							&& (minHit == null || hit.distance < minHit.Value.distance)) {
-						minHit = hit;
-					}
+				}
+				if (CanCollidePhysically(hitObj, hit, minHit)) {
+					minHit = hit;
 				}
 			}
 		}
 		return minHit;
+	}
+
+	private bool CanCollideLogically(GameObject obj) {
+		bool isNotSelf = obj != gameObject;
+		bool shouldNotIgnore = !Physics2D.GetIgnoreLayerCollision(
+			gameObject.layer, obj.layer);
+		return isNotSelf && shouldNotIgnore;
+	}
+
+	private bool CanCollidePhysically(GameObject hitObj, RaycastHit2D hit, RaycastHit2D? minHit) {
+		bool canLogicallyHit = CanCollideLogically(hitObj);
+		bool isLayerPhysical = _physicallyCollidingLayers.Contains(hitObj.layer);
+		bool isShorterHit = minHit == null || hit.distance < minHit.Value.distance;
+		return canLogicallyHit && isLayerPhysical && isShorterHit;
 	}
 
 	private void FlushHitMessages() {

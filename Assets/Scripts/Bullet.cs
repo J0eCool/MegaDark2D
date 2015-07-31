@@ -5,10 +5,13 @@ using System.Collections.Generic;
 public class Bullet : MonoBehaviour, ICollideable {
 	[SerializeField] private float _speed = 15.0f;
 	[SerializeField] private float _maxRange = 300.0f;
+	[SerializeField] private int _damage = 1;
 
 	private SpritePhysics _physics;
 	private float _flownDist = 0.0f;
 	private GameObject _shooter;
+
+	public int Damage { get { return _damage; } }
 
 	public void Init(GameObject shooter, Vector3 dir) {
 		_shooter = shooter;
@@ -32,7 +35,10 @@ public class Bullet : MonoBehaviour, ICollideable {
 
 	public void OnCollide(CollisionData collision) {
 		if (collision.sender != _shooter) {
-			GameObject.Destroy(gameObject);
+			EnemyHealth health = collision.sender.GetComponent<EnemyHealth>();
+			if (health == null || !health.IsInvincible()) {
+				GameObject.Destroy(gameObject);
+			}
 		}
 	}
 }
