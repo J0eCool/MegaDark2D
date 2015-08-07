@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class EnemyHealth : MonoBehaviour, ICollideable {
+public class EnemyHealth : MonoBehaviour, Collideable {
 	[SerializeField] private int _maxHealth = 4;
 	[SerializeField] private float _invincibleTime = 0.5f;
 	

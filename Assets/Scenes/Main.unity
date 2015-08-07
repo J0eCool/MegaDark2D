@@ -1898,10 +1898,6 @@ Prefab:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 11406738, guid: 3f9a1cd1989b0914db43503b2d6d911b, type: 2}
-      propertyPath: _moveReleaseMultiplier
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3f9a1cd1989b0914db43503b2d6d911b, type: 2}
   m_IsPrefabParent: 0

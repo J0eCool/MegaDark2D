@@ -13,7 +13,7 @@ public class SpritePhysics : MonoBehaviour {
 
 	private BoxCollider2D _collider;
 	private List<Vector2> _offsets = new List<Vector2>();
-	private List<ICollideable> _collisionListeners = new List<ICollideable>();
+	private List<Collideable> _collisionListeners = new List<Collideable>();
 
 	private HashSet<GameObject> _collidedObjects = new HashSet<GameObject>();
 
@@ -146,7 +146,7 @@ public class SpritePhysics : MonoBehaviour {
 		}
 	}
 
-	public void RegisterListener(ICollideable listener) {
+	public void RegisterListener(Collideable listener) {
 		_collisionListeners.Add(listener);
 	}
 }
@@ -159,6 +159,6 @@ public class CollisionData {
 	}
 }
 
-public interface ICollideable {
+public interface Collideable {
 	void OnCollide(CollisionData collision);
 }

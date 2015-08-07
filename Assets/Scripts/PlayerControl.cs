@@ -3,98 +3,127 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class PlayerControl : MonoBehaviour {
-	[SerializeField] private float _speed = 10;
-	[SerializeField] private float _timeToMaxSpeed = 0.25f;
-	[SerializeField] private float _moveOppositeMultiplier = 2.5f;
-	[SerializeField] private float _moveReleaseMultiplier = 1.0f;
-	[SerializeField] private float _moveOffGroundMultiplier = 0.35f;
-	[SerializeField] private float _jumpHeight = 3;
-	[SerializeField] private float _jumpReleaseDamping = 0.35f;
-	[SerializeField] private GameObject _bulletPrefab;
+	[SerializeField] private Movement movement;
+	[SerializeField] private float jumpHeight = 3;
+	[SerializeField] private float jumpReleaseDamping = 0.35f;
+	[SerializeField] private GameObject bulletPrefab;
 
-	private SpritePhysics _physics;
-	private InputManager _input;
-	private bool _facingRight = true;
+	private SpritePhysics physics;
+	private InputManager input;
+	private bool facingRight = true;
 
 	void Start() {
-		_input = InputManager.Instance;
+		input = InputManager.Instance;
 
-		_physics = GetComponent<SpritePhysics>();
+		physics = GetComponent<SpritePhysics>();
+
+		movement.Init(physics, input);
 	}
 
 	void FixedUpdate() {
-		UpdateMovement();
+		movement.Update();
 		UpdateFacing();
 		UpdateJumping();
 		UpdateShooting();
 		UpdateReset();
 	}
 
-	private void UpdateMovement() {
-		Vector3 vel = _physics.vel;
-		float accel = _speed / _timeToMaxSpeed * Time.fixedDeltaTime;
-		float v = vel.x;
-		int dX = _input.X.Dir;
+	[System.Serializable]
+	private class Movement : Updateable {
+		[SerializeField] private float speed = 10;
+		[SerializeField] private float timeToMaxSpeed = 0.25f;
+		[SerializeField] private float oppositeDirectionMultiplier = 2.5f;
+		[SerializeField] private float releaseMultiplier = 1.0f;
+		[SerializeField] private float offGroundMultiplier = 0.35f;
 
-		if (!_physics.IsOnGround) {
-			accel *= _moveOffGroundMultiplier;
+		private SpritePhysics physics;
+		private InputManager input;
+
+		public void Init(SpritePhysics physics, InputManager input) {
+			this.physics = physics;
+			this.input = input;
 		}
 
-		float dV;
-		if (dX == 0) { // pressing no direction
-			float s = -Mathf.Sign(v);
-			float mag = Mathf.Abs(v);
-			dV = s * Mathf.Min(_moveReleaseMultiplier * accel, mag);
-		}
-		else if (v * dX >= 0) { // pressing same direction
-			dV = accel * dX;
-		}
-		else { // pressing opposite direction
-			dV = _moveOppositeMultiplier * accel * dX;
-		}
+		public void Update() {
+			Vector3 vel = physics.vel;
+			float v = vel.x;
+			int dX = input.X.Dir;
+
+			float accel = BaseAcceleration() * OffGroundMultiplier() * DirectionMultiplier();
+
+			float dV;
+			if (dX == 0) { // pressing no direction
+				float s = -Mathf.Sign(v);
+				float mag = Mathf.Abs(v);
+				dV = s * Mathf.Min(releaseMultiplier * accel, mag);
+			}
+			else {
+				dV = accel * dX;
+			}
 		
-		vel.x = Mathf.Clamp(v + dV, -_speed, _speed);
-		_physics.vel = vel;
+			vel.x = Mathf.Clamp(v + dV, -speed, speed);
+			physics.vel = vel;
+		}
+
+		private float BaseAcceleration() {
+			return speed / timeToMaxSpeed * Time.fixedDeltaTime;
+		}
+
+		private float OffGroundMultiplier() {
+			if (!physics.IsOnGround) {
+				return offGroundMultiplier;
+			}
+			return 1;
+		}
+
+		private float DirectionMultiplier() {
+			bool isNotPressingSameDirection = input.X.Dir * physics.vel.x < 0;
+			if (isNotPressingSameDirection) {
+				return oppositeDirectionMultiplier;
+			}
+			return 1;
+		}
 	}
 
 	private void UpdateFacing() {
-		if (_physics.vel.x > 0) {
-			_facingRight = true;
+		var dir = input.X.Dir;
+		if (dir > 0) {
+			facingRight = true;
 		}
-		else if (_physics.vel.x < 0) {
-			_facingRight = false;
+		else if (dir < 0) {
+			facingRight = false;
 		}
 	}
 
 	private void UpdateJumping() {
-		Vector3 vel = _physics.vel;
+		Vector3 vel = physics.vel;
 		bool isFalling = vel.y * Physics2D.gravity.y > 0;
-		if (_input.Jump.DidPress && _physics.IsOnGround) {
+		if (input.Jump.DidPress && physics.IsOnGround) {
 			vel.y = JumpSpeed();
 		}
-		else if (_input.Jump.DidRelease && !isFalling) {
-			vel.y *= _jumpReleaseDamping;
+		else if (input.Jump.DidRelease && !isFalling) {
+			vel.y *= jumpReleaseDamping;
 		}
-		_physics.vel = vel;
+		physics.vel = vel;
 	}
 
 	private float JumpSpeed() {
 		float g = Physics2D.gravity.y;
-		return -Mathf.Sign(g) * Mathf.Sqrt(2 * _jumpHeight * Mathf.Abs(g));
+		return -Mathf.Sign(g) * Mathf.Sqrt(2 * jumpHeight * Mathf.Abs(g));
 	}
 
 	private void UpdateShooting() {
-		if (_input.Shoot.DidPress) {
-			GameObject bulletObj = GameObject.Instantiate(_bulletPrefab);
+		if (input.Shoot.DidPress) {
+			GameObject bulletObj = GameObject.Instantiate(bulletPrefab);
 			bulletObj.transform.position = transform.position;
 			Bullet bullet = bulletObj.GetComponent<Bullet>();
-			float bulletXDir = _facingRight ? 1 : -1;
+			float bulletXDir = facingRight ? 1 : -1;
 			bullet.Init(gameObject, new Vector3(bulletXDir, 0, 0));
 		}
 	}
 
 	private void UpdateReset() {
-		if (_input.Reset.DidPress) {
+		if (input.Reset.DidPress) {
 			Application.LoadLevel(Application.loadedLevel);
 		}
 	}

@@ -29,7 +29,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 194284}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.46334743, y: -3.43911576, z: 0}
+  m_LocalPosition: {x: -5.88999987, y: -3.44000006, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -104,14 +104,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95b14334034817d4cbb52f1f6b7e3983, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 7
-  _timeToMaxSpeed: .25
-  _moveOppositeMultiplier: 2.5
-  _moveReleaseMultiplier: .5
-  _moveOffGroundMultiplier: .349999994
-  _jumpHeight: 3
-  _jumpReleaseDamping: .349999994
-  _bulletPrefab: {fileID: 124272, guid: 9d2d67d0536bc9646ae9ee57cdc25832, type: 2}
+  movement:
+    speed: 7
+    timeToMaxSpeed: .200000003
+    moveOppositeMultiplier: 2.5
+    moveReleaseMultiplier: 1
+    moveOffGroundMultiplier: .349999994
+  jumpHeight: 3
+  jumpReleaseDamping: .349999994
+  bulletPrefab: {fileID: 124272, guid: 9d2d67d0536bc9646ae9ee57cdc25832, type: 2}
 --- !u!114 &11429102
 MonoBehaviour:
   m_ObjectHideFlags: 1

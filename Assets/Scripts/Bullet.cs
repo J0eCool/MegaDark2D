@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Bullet : MonoBehaviour, ICollideable {
+public class Bullet : MonoBehaviour, Collideable {
 	[SerializeField] private float _speed = 15.0f;
 	[SerializeField] private float _maxRange = 300.0f;
 	[SerializeField] private int _damage = 1;

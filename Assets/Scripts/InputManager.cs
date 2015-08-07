@@ -10,7 +10,7 @@ public class InputManager : SingletonComponent<InputManager> {
 	public Button Shoot { get; private set; }
 	public Button Reset { get; private set; }
 
-	private List<IUpdateable> _inputs = new List<IUpdateable>();
+	private List<Updateable> _inputs = new List<Updateable>();
 
 	void Start() {
 		_inputs.Add(X = new Axis("Horizontal"));
@@ -28,11 +28,11 @@ public class InputManager : SingletonComponent<InputManager> {
 	}
 }
 
-public interface IUpdateable {
+public interface Updateable {
 	void Update();
 }
 
-public class Axis : IUpdateable {
+public class Axis : Updateable {
 	public int Dir { get; private set; }
 	private string _axisName;
 
@@ -54,7 +54,7 @@ public class Axis : IUpdateable {
 	}
 }
 
-public class Button : IUpdateable {
+public class Button : Updateable {
 	public bool DidPress { get; private set; }
 	public bool DidRelease { get; private set; }
 	public bool IsHeld { get; private set; }
