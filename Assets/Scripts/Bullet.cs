@@ -35,7 +35,7 @@ public class Bullet : MonoBehaviour, Collideable {
 
 	public void OnCollide(CollisionData collision) {
 		if (collision.sender != _shooter) {
-			EnemyHealth health = collision.sender.GetComponent<EnemyHealth>();
+			Health health = collision.sender.GetComponent<Health>();
 			if (health == null || !health.IsInvincible()) {
 				GameObject.Destroy(gameObject);
 			}

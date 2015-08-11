@@ -15,6 +15,8 @@ GameObject:
   - 114: {fileID: 11429102}
   - 114: {fileID: 11406738}
   - 61: {fileID: 6142276}
+  - 114: {fileID: 11490238}
+  - 114: {fileID: 11490384}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -105,11 +107,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement:
-    speed: 7
-    timeToMaxSpeed: .200000003
-    moveOppositeMultiplier: 2.5
-    moveReleaseMultiplier: 1
-    moveOffGroundMultiplier: .349999994
+    speed: 5
+    timeToMaxSpeed: .300000012
+    oppositeDirectionMultiplier: 2.5
+    releaseMultiplier: 1
+    offGroundMultiplier: .349999994
   jumpHeight: 3
   jumpReleaseDamping: .349999994
   bulletPrefab: {fileID: 124272, guid: 9d2d67d0536bc9646ae9ee57cdc25832, type: 2}
@@ -151,6 +153,32 @@ MonoBehaviour:
   meshColliderPositions: []
   meshColliderMesh: {fileID: 0}
   renderLayer: 0
+--- !u!114 &11490238
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95d7014077973e4459120dc53b8807f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 5
+  invincibleTime: 1.5
+--- !u!114 &11490384
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a048dfb046823c2458e6ad73e07b40e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flickerRate: .075000003
+  _fadeAlpha: .349999994
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
