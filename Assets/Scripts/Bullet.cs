@@ -18,7 +18,6 @@ public class Bullet : MonoBehaviour, Collideable {
 
 		_physics = GetComponent<SpritePhysics>();
 		_physics.vel = _speed * dir;
-		_physics.RegisterListener(this);
 	}
 
 	void FixedUpdate() {

@@ -11,7 +11,6 @@ GameObject:
   - 23: {fileID: 2387408}
   - 33: {fileID: 3348592}
   - 114: {fileID: 11446862}
-  - 50: {fileID: 5041584}
   - 114: {fileID: 11429102}
   - 114: {fileID: 11406738}
   - 61: {fileID: 6142276}
@@ -67,21 +66,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 194284}
   m_Mesh: {fileID: 0}
---- !u!50 &5041584
-Rigidbody2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 194284}
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: .0500000007
-  m_GravityScale: 0
-  m_FixedAngle: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
 --- !u!61 &6142276
 BoxCollider2D:
   m_ObjectHideFlags: 1

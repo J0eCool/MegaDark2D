@@ -43,6 +43,11 @@ public class SpritePhysics : MonoBehaviour {
 			_offsets.Add(new Vector2(x, y));
 			_offsets.Add(new Vector2(-x, y));
 		}
+
+		var listeners = GetComponents<Collideable>();
+		foreach (var listener in listeners) {
+			RegisterListener(listener);
+		}
 	}
 		
 	void FixedUpdate() {

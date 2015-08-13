@@ -17,9 +17,6 @@ public abstract class Health : MonoBehaviour, Collideable {
 		health = maxHealth;
 
 		flicker = GetComponent<Flicker>();
-
-		var physics = GetComponent<SpritePhysics>();
-		physics.RegisterListener(this);
 	}
 
 	void FixedUpdate() {
