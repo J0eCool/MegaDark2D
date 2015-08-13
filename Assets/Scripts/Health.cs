@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Health : MonoBehaviour, Collideable {
+public abstract class Health : MonoBehaviour, Collideable {
 	[SerializeField] private int maxHealth = 4;
 	[SerializeField] private float invincibleTime = 0.5f;
 	
@@ -32,12 +32,7 @@ public class Health : MonoBehaviour, Collideable {
 		GameObject.Destroy(gameObject);
 	}
 
-	public virtual void OnCollide(CollisionData collision) {
-		var bullet = collision.sender.GetComponent<Bullet>();
-		if (bullet != null) {
-			TakeDamage(bullet.Damage);
-		}
-	}
+	public abstract void OnCollide(CollisionData collision);
 
 	protected void TakeDamage(int damage) {
 		if (!IsInvincible()) {
