@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class PlayerControl : MonoBehaviour {
-	[SerializeField] private Movement movement;
+	[SerializeField] private Movement movement = new Movement();
 	[SerializeField] private float jumpHeight = 3;
 	[SerializeField] private float jumpReleaseDamping = 0.35f;
-	[SerializeField] private GameObject bulletPrefab;
+	[SerializeField] private GameObject bulletPrefab = null;
 
 	private SpritePhysics physics;
 	private InputManager input;
