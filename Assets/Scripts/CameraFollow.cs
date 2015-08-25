@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class CameraFollow : MonoBehaviour {
-	[SerializeField] private GameObject target;
-	[SerializeField] private bool lockX;
-	[SerializeField] private bool lockY;
+	[SerializeField] private GameObject target = null;
+	[SerializeField] private bool lockX = false;
+	[SerializeField] private bool lockY = false;
 
 	void Update() {
 		Vector3 pos = transform.position;

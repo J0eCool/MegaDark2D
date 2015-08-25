@@ -48,9 +48,16 @@
       <HintPath>UnityEngine.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Health.fs" />
+    <Compile Include="Assets\Scripts\EnemyManager.fs" />
     <Compile Include="Assets/Scripts/FlyDropMovement.fs" />
+    <Compile Include="Assets\Scripts\Player.fs" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>

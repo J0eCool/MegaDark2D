@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class Flicker : MonoBehaviour {
-	[SerializeField] private float _flickerRate = 0.2f;
-	[SerializeField] private float _fadeAlpha = 0.0f;
+	[SerializeField] private float _flickerRate = 0.075f;
+	[SerializeField] private float _fadeAlpha = 0.35f;
 
 	private tk2dSprite _sprite;
 	private float _baseAlpha;

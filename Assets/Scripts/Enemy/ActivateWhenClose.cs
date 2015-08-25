@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class ActivateWhenClose : MonoBehaviour {
-	[SerializeField] private float range = 10.0f;
+	[SerializeField] private float range = 8.0f;
 
 	private List<MonoBehaviour> componentsToActivate = new List<MonoBehaviour>();
 

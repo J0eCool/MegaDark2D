@@ -14,6 +14,9 @@ GameObject:
   - 114: {fileID: 11493640}
   - 114: {fileID: 11496624}
   - 61: {fileID: 6193760}
+  - 114: {fileID: 11459962}
+  - 114: {fileID: 11499340}
+  - 114: {fileID: 11491052}
   m_Layer: 9
   m_Name: DropFlyer
   m_TagString: Untagged
@@ -100,6 +103,32 @@ MonoBehaviour:
   meshColliderPositions: []
   meshColliderMesh: {fileID: 0}
   renderLayer: 0
+--- !u!114 &11459962
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 178600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a048dfb046823c2458e6ad73e07b40e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _flickerRate: .075000003
+  _fadeAlpha: .349999994
+--- !u!114 &11491052
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 178600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1763924309, guid: 2dad690780117e34ab4f182b2b621185, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 2
+  invincibleTime: .5
 --- !u!114 &11493640
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -112,7 +141,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flySpeed: -2
-  fallSpeed: 4
+  dropInitialSpeed: -5
+  dropAcceleration: -5
 --- !u!114 &11496624
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -124,10 +154,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07ed95c4f39ddef4b9e4bc76ee1d8417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _numHorizontalRays: 3
-  _numVerticalRays: 3
-  _ignoreGravity: 1
-  _debugDrawRays: 0
+  numHorizontalRays: 3
+  numVerticalRays: 3
+  ignoreGravity: 1
+  ignoreTerrain: 1
+  debugDrawRays: 0
+--- !u!114 &11499340
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 178600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd2620496d7778f4f8f064874af8375e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 8
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

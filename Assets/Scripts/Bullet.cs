@@ -33,11 +33,11 @@ public class Bullet : MonoBehaviour, Collideable {
 	}
 
 	public void OnCollide(CollisionData collision) {
-		if (collision.sender != _shooter) {
-			Health health = collision.sender.GetComponent<Health>();
-			if (health == null || !health.IsInvincible()) {
-				GameObject.Destroy(gameObject);
-			}
+	}
+
+	public void DidHit(GameObject obj) {
+		if (obj != _shooter) {
+			GameObject.Destroy(gameObject);
 		}
 	}
 }
