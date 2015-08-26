@@ -8,8 +8,8 @@ public class PlayerHealth : Health {
 	}
 
 	public override void OnCollide(CollisionData collision) {
-		var enemy = collision.sender.GetComponent<EnemyMoveForward>();
-		if (enemy != null) {
+		bool isEnemy = EnemyManager.Instance.IsEnemy(collision.sender);
+		if (isEnemy) {
 			TakeDamage(2);
 		}
 	}
