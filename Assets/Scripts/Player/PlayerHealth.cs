@@ -10,7 +10,7 @@ public class PlayerHealth : Health {
 	public override void OnCollide(CollisionData collision) {
 		bool isEnemy = EnemyManager.Instance.IsEnemy(collision.sender);
 		if (isEnemy) {
-			TakeDamage(2);
+			TakeDamage(25);
 		}
 	}
 }

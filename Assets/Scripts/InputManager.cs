@@ -8,21 +8,23 @@ public class InputManager : SingletonComponent<InputManager> {
 
 	public Button Jump { get; private set; }
 	public Button Shoot { get; private set; }
+	public Button Special { get; private set; }
 	public Button Reset { get; private set; }
 
-	private List<Updateable> _inputs = new List<Updateable>();
+	private List<Updateable> inputs = new List<Updateable>();
 
 	void Start() {
-		_inputs.Add(X = new Axis("Horizontal"));
-		_inputs.Add(Y = new Axis("Vertical"));
+		inputs.Add(X = new Axis("Horizontal"));
+		inputs.Add(Y = new Axis("Vertical"));
 
-		_inputs.Add(Jump = new Button("Jump"));
-		_inputs.Add(Shoot = new Button("Shoot"));
-		_inputs.Add(Reset = new Button("Reset"));
+		inputs.Add(Jump = new Button("Jump"));
+		inputs.Add(Shoot = new Button("Shoot"));
+		inputs.Add(Special = new Button("Special"));
+		inputs.Add(Reset = new Button("Reset"));
 	}
 
 	void FixedUpdate() {
-		foreach (var input in _inputs) {
+		foreach (var input in inputs) {
 			input.Update();
 		}
 	}
@@ -34,14 +36,15 @@ public interface Updateable {
 
 public class Axis : Updateable {
 	public int Dir { get; private set; }
-	private string _axisName;
+
+	private string axisName;
 
 	public Axis(string axisName) {
-		_axisName = axisName;
+		this.axisName = axisName;
 	}
 
 	public void Update() {
-		float raw = Input.GetAxis(_axisName);
+		float raw = Input.GetAxis(axisName);
 		if (raw > 0.5f) {
 			Dir = 1;
 		}
@@ -58,17 +61,18 @@ public class Button : Updateable {
 	public bool DidPress { get; private set; }
 	public bool DidRelease { get; private set; }
 	public bool IsHeld { get; private set; }
-	private bool _wasHeld = false;
-	private string _axisName;
+
+	private bool wasHeld = false;
+	private string axisName;
 
 	public Button(string axisName) {
-		_axisName = axisName;
+		this.axisName = axisName;
 	}
 
 	public void Update() {
-		IsHeld = Input.GetAxis(_axisName) > 0.5f;
-		DidPress = IsHeld && !_wasHeld;
-		DidRelease = !IsHeld && _wasHeld;
-		_wasHeld = IsHeld;
+		IsHeld = Input.GetAxis(axisName) > 0.5f;
+		DidPress = IsHeld && !wasHeld;
+		DidRelease = !IsHeld && wasHeld;
+		wasHeld = IsHeld;
 	}
 }

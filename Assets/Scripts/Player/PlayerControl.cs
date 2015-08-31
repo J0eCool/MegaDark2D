@@ -7,15 +7,18 @@ public class PlayerControl : MonoBehaviour {
 	[SerializeField] private float jumpHeight = 3;
 	[SerializeField] private float jumpReleaseDamping = 0.35f;
 	[SerializeField] private GameObject bulletPrefab;
+	[SerializeField] private GameObject specialBulletPrefab;
 
-	private SpritePhysics physics;
 	private InputManager input;
+	private SpritePhysics physics;
+	private PlayerMana mana;
 	private bool facingRight = true;
 
 	void Start() {
 		input = InputManager.Instance;
 
 		physics = GetComponent<SpritePhysics>();
+		mana = GetComponent<PlayerMana>();
 
 		movement.Init(physics, input);
 	}
@@ -52,7 +55,8 @@ public class PlayerControl : MonoBehaviour {
 			float accel = BaseAcceleration() * OffGroundMultiplier() * DirectionMultiplier();
 
 			float dV;
-			if (dX == 0) { // pressing no direction
+			bool isReleasingXDir = (dX == 0);
+			if (isReleasingXDir) {
 				float s = -Mathf.Sign(v);
 				float mag = Mathf.Abs(v);
 				dV = s * Mathf.Min(releaseMultiplier * accel, mag);
@@ -113,13 +117,35 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	private void UpdateShooting() {
-		if (input.Shoot.DidPress) {
-			GameObject bulletObj = GameObject.Instantiate(bulletPrefab);
-			bulletObj.transform.position = transform.position;
-			Bullet bullet = bulletObj.GetComponent<Bullet>();
-			float bulletXDir = facingRight ? 1 : -1;
-			bullet.Init(gameObject, new Vector3(bulletXDir, 0, 0));
+		var shotPrefab = getShotBulletPrefab();
+		if (shotPrefab != null) {
+			tryShoot(shotPrefab);
 		}
+	}
+
+	private GameObject getShotBulletPrefab() {
+		if (input.Shoot.DidPress) {
+			return bulletPrefab;
+		}
+		else if (input.Special.DidPress) {
+			return specialBulletPrefab;
+		}
+		return null;
+	}
+
+	private void tryShoot(GameObject prefab) {
+		Bullet bullet = prefab.GetComponent<Bullet>();
+		if (mana.TrySpend(bullet.ManaCost)) {
+			shoot(prefab);
+		}
+	}
+
+	private void shoot(GameObject prefab) {
+		GameObject bulletObj = GameObject.Instantiate(prefab);
+		bulletObj.transform.position = transform.position;
+		Bullet bullet = bulletObj.GetComponent<Bullet>();
+		float bulletXDir = facingRight ? 1 : -1;
+		bullet.Init(gameObject, new Vector3(bulletXDir, 0, 0));
 	}
 
 	private void UpdateReset() {

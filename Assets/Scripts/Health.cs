@@ -2,25 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public abstract class Health : MonoBehaviour, Collideable {
-	[SerializeField] private int maxHealth = 4;
-	[SerializeField] private float invincibleTime = 0.5f;
-	
-	private int health;
-	
+public abstract class Health : CappedAmount, Collideable {
+	[SerializeField] private float invincibleTime = 0.05f;
+		
 	private Flicker flicker;
 
-	public int CurrentHealth { get { return health; } }
-	public int MaxHealth { get { return maxHealth; } }
-
-	void Start() {
-		health = maxHealth;
-
+	protected override void onStart() {
+		base.onStart();
 		flicker = GetComponent<Flicker>();
 	}
 
 	void FixedUpdate() {
-		if (health <= 0) {
+		if (Current <= 0) {
 			Kill();
 		}
 	}
@@ -33,12 +26,12 @@ public abstract class Health : MonoBehaviour, Collideable {
 
 	protected void TakeDamage(int damage) {
 		if (!IsInvincible()) {
-			health -= damage;
+			Current -= damage;
 			flicker.BeginFlicker(invincibleTime);
 		}
 	}
 
 	public bool IsInvincible() {
-		return flicker.IsFlickering();
+		return !enabled || flicker.IsFlickering();
 	}
 }
