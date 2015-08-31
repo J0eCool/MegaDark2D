@@ -41,7 +41,7 @@ public class FlyDropMovement : MonoBehaviour {
 	}
 
     private void setVel(float x, float y) {
-        physics.vel = new Vector2(x, y);
+        physics.Vel = new Vector2(x, y);
 	}
 
     private bool shouldFall(Vector3 delta) {
@@ -49,7 +49,7 @@ public class FlyDropMovement : MonoBehaviour {
 	}
 
     private void fallUpdate() {
-		float vel = physics.vel.y;
+		float vel = physics.Vel.y;
 		vel += Time.fixedDeltaTime * dropAcceleration;
         setVel(0.0f, vel);
 	}

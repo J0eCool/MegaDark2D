@@ -13,9 +13,10 @@ GameObject:
   - 114: {fileID: 11454916}
   - 114: {fileID: 11498178}
   - 114: {fileID: 11491996}
-  - 61: {fileID: 6138604}
+  - 61: {fileID: 6133982}
+  - 114: {fileID: 11406818}
   m_Layer: 10
-  m_Name: Big Bullet
+  m_Name: Bomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +29,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 171416}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.52638769, y: -7.26800919, z: 0}
+  m_LocalPosition: {x: -5.34820747, y: -6.35384893, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -64,7 +65,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 171416}
   m_Mesh: {fileID: 0}
---- !u!61 &6138604
+--- !u!61 &6133982
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -76,7 +77,20 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: .625, y: .625}
+  m_Size: {x: .5, y: .5}
+--- !u!114 &11406818
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 171416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87087de25f88fc74398560488ec3d565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 106614, guid: fd80c2fe6c883e147b94f8ae89731e4d, type: 2}
+  numBullets: 12
 --- !u!114 &11454916
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -89,10 +103,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collection: {fileID: 11496494, guid: f5f71cace81f18940a4588bb41d6c6e7, type: 2}
-  _color: {r: .886274517, g: .717647076, b: 0, a: 1}
-  _scale: {x: 1.25, y: 1.25, z: 1}
+  _color: {r: .501960814, g: .501960814, b: .501960814, a: 1}
+  _scale: {x: 1, y: 1, z: 1}
   _spriteId: 1
-  boxCollider2D: {fileID: 6138604}
+  boxCollider2D: {fileID: 0}
   polygonCollider2D: []
   edgeCollider2D: []
   boxCollider: {fileID: 0}
@@ -113,7 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numHorizontalRays: 3
   numVerticalRays: 3
-  ignoreGravity: 1
+  ignoreGravity: 0
   ignoreTerrain: 0
   debugDrawRays: 0
 --- !u!114 &11498178
@@ -127,8 +141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0e531f9fdf3ced488d9ee87fb551171, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 15
-  baseDir: {x: 0, y: 0}
+  speed: 14.5
+  baseDir: {x: 0, y: 2.25}
   lockRotation: 0
   maxRange: 50
   damage: 3

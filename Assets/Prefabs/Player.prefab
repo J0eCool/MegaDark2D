@@ -100,7 +100,7 @@ MonoBehaviour:
   jumpHeight: 3
   jumpReleaseDamping: .349999994
   bulletPrefab: {fileID: 124272, guid: 9d2d67d0536bc9646ae9ee57cdc25832, type: 2}
-  specialBulletPrefab: {fileID: 171416, guid: c4664a78e7f20b34b95534ecb0544d96, type: 2}
+  specialBulletPrefab: {fileID: 171416, guid: de0615d3638a8b74ea0431a783f8e970, type: 2}
 --- !u!114 &11429102
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -9,7 +9,7 @@ public class SpritePhysics : MonoBehaviour {
 	[SerializeField] private bool ignoreTerrain = false;
 	[SerializeField] private bool debugDrawRays = false;
 
-	public Vector2 vel { get; set; }
+	public Vector2 Vel { get; set; }
 	public bool IsOnGround { get; private set; }
 
 	private BoxCollider2D boxCollider;
@@ -58,13 +58,13 @@ public class SpritePhysics : MonoBehaviour {
 		if (debugDrawRays) {
 			foreach (Vector3 offset in offsets) {
 				Vector3 origin = transform.position + offset;
-				Debug.DrawLine(origin, origin + (Vector3)vel * Time.fixedDeltaTime, Color.green);
+				Debug.DrawLine(origin, origin + (Vector3)Vel * Time.fixedDeltaTime, Color.green);
 			}
 		}
 	}
 
 	private void UpdatePosition() {
-		Vector3 v = vel;
+		Vector3 v = Vel;
 		if (!ignoreGravity) {
 			v += (Vector3)Physics2D.gravity * Time.fixedDeltaTime;
 		}
@@ -77,7 +77,7 @@ public class SpritePhysics : MonoBehaviour {
 
 		v.x = GoDir(new Vector2(v.x, 0)).x;
 		v.y = GoDir(new Vector2(0, v.y)).y;
-		vel = v;
+		Vel = v;
 	}
 
 	private Vector2 GoDir(Vector2 v) {

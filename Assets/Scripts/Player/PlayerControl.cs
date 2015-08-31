@@ -48,7 +48,7 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		public void Update() {
-			Vector3 vel = physics.vel;
+			Vector3 vel = physics.Vel;
 			float v = vel.x;
 			int dX = input.X.Dir;
 
@@ -66,7 +66,7 @@ public class PlayerControl : MonoBehaviour {
 			}
 		
 			vel.x = Mathf.Clamp(v + dV, -speed, speed);
-			physics.vel = vel;
+			physics.Vel = vel;
 		}
 
 		private float BaseAcceleration() {
@@ -81,7 +81,7 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		private float DirectionMultiplier() {
-			bool isNotPressingSameDirection = input.X.Dir * physics.vel.x < 0;
+			bool isNotPressingSameDirection = input.X.Dir * physics.Vel.x < 0;
 			if (isNotPressingSameDirection) {
 				return oppositeDirectionMultiplier;
 			}
@@ -100,7 +100,7 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	private void UpdateJumping() {
-		Vector3 vel = physics.vel;
+		Vector3 vel = physics.Vel;
 		bool isFalling = vel.y * Physics2D.gravity.y > 0;
 		if (input.Jump.DidPress && physics.IsOnGround) {
 			vel.y = JumpSpeed();
@@ -108,7 +108,7 @@ public class PlayerControl : MonoBehaviour {
 		else if (input.Jump.DidRelease && !isFalling) {
 			vel.y *= jumpReleaseDamping;
 		}
-		physics.vel = vel;
+		physics.Vel = vel;
 	}
 
 	private float JumpSpeed() {
@@ -141,11 +141,9 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	private void shoot(GameObject prefab) {
-		GameObject bulletObj = GameObject.Instantiate(prefab);
-		bulletObj.transform.position = transform.position;
-		Bullet bullet = bulletObj.GetComponent<Bullet>();
-		float bulletXDir = facingRight ? 1 : -1;
-		bullet.Init(gameObject, new Vector3(bulletXDir, 0, 0));
+		float xDir = facingRight ? 1 : -1;
+		Vector2 dir = new Vector2(xDir, 0);
+		Bullet.Create(prefab, gameObject, dir);
 	}
 
 	private void UpdateReset() {

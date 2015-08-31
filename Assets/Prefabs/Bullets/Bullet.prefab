@@ -89,6 +89,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 15
+  baseDir: {x: 0, y: 0}
+  lockRotation: 0
   maxRange: 50
   damage: 1
   manaCost: 0

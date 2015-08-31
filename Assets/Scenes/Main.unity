@@ -358,7 +358,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!114 &319512908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -878,7 +878,7 @@ RectTransform:
   - {fileID: 955109411}
   - {fileID: 817355006}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 8
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -1194,7 +1194,7 @@ Transform:
   - {fileID: 1946033182}
   - {fileID: 773858286}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!1 &1123371743
 GameObject:
   m_ObjectHideFlags: 0
@@ -1418,6 +1418,19 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1798711079}
   m_Script: {fileID: 11500000, guid: 95d7014077973e4459120dc53b8807f0, type: 3}
+--- !u!114 &1583724685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1583724675}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70824785d999c0f4e9dcdbd6feadcdf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shotsPerSecond: 3
+  bulletPrefab: {fileID: 171416, guid: de0615d3638a8b74ea0431a783f8e970, type: 2}
 --- !u!1 &1653533516
 GameObject:
   m_ObjectHideFlags: 0
@@ -1548,7 +1561,7 @@ Transform:
   m_Children:
   - {fileID: 2088283704}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!1 &1780646490
 GameObject:
   m_ObjectHideFlags: 0
@@ -1621,7 +1634,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 4
 --- !u!1001 &1798711079
 Prefab:
   m_ObjectHideFlags: 0
@@ -1659,7 +1672,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 408914, guid: 3f9a1cd1989b0914db43503b2d6d911b, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3348592, guid: 3f9a1cd1989b0914db43503b2d6d911b, type: 2}
       propertyPath: m_Mesh

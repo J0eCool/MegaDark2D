@@ -12,8 +12,8 @@ public class EnemyMoveForward : MonoBehaviour {
 	}
 		
 	void Update() {
-		var vel = physics.vel;
+		var vel = physics.Vel;
 		vel.x = moveSpeed;
-		physics.vel = vel;
+		physics.Vel = vel;
 	}
 }
