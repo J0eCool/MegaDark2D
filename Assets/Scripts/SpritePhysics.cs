@@ -12,6 +12,11 @@ public class SpritePhysics : MonoBehaviour {
 	public Vector2 Vel { get; set; }
 	public bool IsOnGround { get; private set; }
 
+	public bool DidHitLeft { get; private set; }
+	public bool DidHitRight { get; private set; }
+	public bool DidHitUp { get; private set; }
+	public bool DidHitDown { get; private set; }
+
 	private BoxCollider2D boxCollider;
 	private List<Vector2> offsets = new List<Vector2>();
 	private List<Collideable> collisionListeners = new List<Collideable>();
@@ -64,20 +69,27 @@ public class SpritePhysics : MonoBehaviour {
 	}
 
 	private void UpdatePosition() {
-		Vector3 v = Vel;
+		Vector2 v = Vel;
 		if (!ignoreGravity) {
-			v += (Vector3)Physics2D.gravity * Time.fixedDeltaTime;
+			v += Physics2D.gravity * Time.fixedDeltaTime;
 		}
 
-		float g = Physics2D.gravity.y;
-
-		if (v.y * g < 0 || v.y * Mathf.Sign(g) > 0.15f * Mathf.Abs(g)) {
-			IsOnGround = false;
-		}
+		resetHitFlags(v);
 
 		v.x = GoDir(new Vector2(v.x, 0)).x;
 		v.y = GoDir(new Vector2(0, v.y)).y;
 		Vel = v;
+	}
+
+	private void resetHitFlags(Vector2 v) {
+		float g = Physics2D.gravity.y;
+		if (v.y * g < 0 || v.y * Mathf.Sign(g) > 0.05f * Mathf.Abs(g)) {
+			IsOnGround = false;
+		}
+		DidHitLeft = false;
+		DidHitRight = false;
+		DidHitUp = false;
+		DidHitDown = false;
 	}
 
 	private Vector2 GoDir(Vector2 v) {
@@ -85,11 +97,9 @@ public class SpritePhysics : MonoBehaviour {
 		Vector3 toMove = v * Time.fixedDeltaTime;
 		RaycastHit2D? hit = FindCollision(toMove);
 		if (hit != null) {
+			setHitFlags(v);
 			v = Vector2.zero;
 			float d = Mathf.Max(hit.Value.distance - kEpsilon, 0.0f);
-			if (isY) {
-				IsOnGround = toMove.y * Physics2D.gravity.y > 0;
-			}
 			float s = Mathf.Sign(isY ? toMove.y : toMove.x);
 			float dist = s * d;
 			if (isY) {
@@ -101,6 +111,27 @@ public class SpritePhysics : MonoBehaviour {
 		}
 		transform.position += toMove;
 		return v;
+	}
+
+	private void setHitFlags(Vector2 v) {
+		bool isY = Mathf.Abs(v.y) > 0;
+		if (isY) {
+			if (v.y * Physics2D.gravity.y > 0) {
+				IsOnGround = true;
+				DidHitDown = true;
+			}
+			else {
+				DidHitUp = true;
+			}
+		}
+		else {
+			if (v.x > 0) {
+				DidHitRight = true;
+			}
+			else {
+				DidHitLeft = true;
+			}
+		}
 	}
 
 	private RaycastHit2D? FindCollision(Vector3 toMove) {

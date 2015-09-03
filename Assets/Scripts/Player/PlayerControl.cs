@@ -9,6 +9,8 @@ public class PlayerControl : MonoBehaviour {
 	[SerializeField] private GameObject bulletPrefab;
 	[SerializeField] private GameObject specialBulletPrefab;
 
+	[SerializeField] private float debugTrailTime = -1.0f;
+
 	private InputManager input;
 	private SpritePhysics physics;
 	private PlayerMana mana;
@@ -29,6 +31,13 @@ public class PlayerControl : MonoBehaviour {
 		UpdateJumping();
 		UpdateShooting();
 		UpdateReset();
+
+		if (debugTrailTime > 0.0f) {
+			Debug.DrawLine(transform.position,
+				transform.position + (Vector3)physics.Vel * Time.fixedDeltaTime,
+				Color.cyan,
+				debugTrailTime);
+		}
 	}
 
 	[System.Serializable]
@@ -52,7 +61,7 @@ public class PlayerControl : MonoBehaviour {
 			float v = vel.x;
 			int dX = input.X.Dir;
 
-			float accel = BaseAcceleration() * OffGroundMultiplier() * DirectionMultiplier();
+			float accel = baseAcceleration() * accelerationMultiplier();
 
 			float dV;
 			bool isReleasingXDir = (dX == 0);
@@ -69,18 +78,15 @@ public class PlayerControl : MonoBehaviour {
 			physics.Vel = vel;
 		}
 
-		private float BaseAcceleration() {
+		private float baseAcceleration() {
 			return speed / timeToMaxSpeed * Time.fixedDeltaTime;
 		}
 
-		private float OffGroundMultiplier() {
+		private float accelerationMultiplier() {
 			if (!physics.IsOnGround) {
 				return offGroundMultiplier;
 			}
-			return 1;
-		}
 
-		private float DirectionMultiplier() {
 			bool isNotPressingSameDirection = input.X.Dir * physics.Vel.x < 0;
 			if (isNotPressingSameDirection) {
 				return oppositeDirectionMultiplier;
