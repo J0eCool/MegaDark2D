@@ -17,6 +17,8 @@ GameObject:
   - 114: {fileID: 11415346}
   - 114: {fileID: 11401942}
   - 114: {fileID: 11455464}
+  - 114: {fileID: 11459992}
+  - 114: {fileID: 11456422}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Untagged
@@ -92,7 +94,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2.5
-  facingRight: 0
 --- !u!114 &11415346
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -131,6 +132,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 8
+--- !u!114 &11456422
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 112894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70824785d999c0f4e9dcdbd6feadcdf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shotsPerSecond: .5
+  bulletPrefab: {fileID: 124272, guid: 9d2d67d0536bc9646ae9ee57cdc25832, type: 2}
+--- !u!114 &11459992
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 112894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8b525692d7afa54e93badb851d4cdd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  facingRight: 0
 --- !u!114 &11472178
 MonoBehaviour:
   m_ObjectHideFlags: 1

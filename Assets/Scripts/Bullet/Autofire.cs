@@ -2,12 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Autofire : MonoBehaviour {
+public class Autofire : JComponent {
 	[SerializeField] private float shotsPerSecond = 3.0f;
 	[SerializeField] private GameObject bulletPrefab;
 
+	private Facing facing;
 	private float shotTimer = 0.0f;
-		
+
+	void Start() {
+		facing = GetComponent<Facing>();
+	}
+
 	void Update() {
 		shotTimer += Time.deltaTime;
 		float timePerShot = 1.0f / shotsPerSecond;
@@ -18,6 +23,10 @@ public class Autofire : MonoBehaviour {
 	}
 
 	private void shoot(GameObject prefab) {
-		Bullet.Create(prefab, gameObject, new Vector2(1, 0));
+		int dir = 1;
+		if (facing != null) {
+			dir = facing.Dir;
+		}
+		Bullet.Create(prefab, gameObject, new Vector2(dir, 0));
 	}
 }

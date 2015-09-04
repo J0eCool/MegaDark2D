@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class PlayerControl : MonoBehaviour {
+public class PlayerControl : JComponent {
 	[SerializeField] private Movement movement;
 	[SerializeField] private float jumpHeight = 3;
 	[SerializeField] private float jumpReleaseDamping = 0.35f;
@@ -13,13 +13,14 @@ public class PlayerControl : MonoBehaviour {
 
 	private InputManager input;
 	private SpritePhysics physics;
+	private Facing facing;
 	private PlayerMana mana;
-	private bool facingRight = true;
 
 	void Start() {
 		input = InputManager.Instance;
 
 		physics = GetComponent<SpritePhysics>();
+		facing = GetComponent<Facing>();
 		mana = GetComponent<PlayerMana>();
 
 		movement.Init(physics, input);
@@ -98,10 +99,10 @@ public class PlayerControl : MonoBehaviour {
 	private void UpdateFacing() {
 		var dir = input.X.Dir;
 		if (dir > 0) {
-			facingRight = true;
+			facing.FacingRight = true;
 		}
 		else if (dir < 0) {
-			facingRight = false;
+			facing.FacingRight = false;
 		}
 	}
 
@@ -147,8 +148,7 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 	private void shoot(GameObject prefab) {
-		float xDir = facingRight ? 1 : -1;
-		Vector2 dir = new Vector2(xDir, 0);
+		Vector2 dir = new Vector2(facing.Dir, 0);
 		Bullet.Create(prefab, gameObject, dir);
 	}
 
