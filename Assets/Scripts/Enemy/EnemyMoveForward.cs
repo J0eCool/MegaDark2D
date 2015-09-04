@@ -5,14 +5,9 @@ using System.Collections.Generic;
 public class EnemyMoveForward : JComponent {
 	[SerializeField] private float moveSpeed;
 
-	private SpritePhysics physics;
-	private Facing facing;
+	[StartComponent] private SpritePhysics physics;
+	[StartComponent] private Facing facing;
 
-	void Start() {
-		physics = GetComponent<SpritePhysics>();
-		facing = GetComponent<Facing>();
-	}
-		
 	void FixedUpdate() {
 		if (physics.DidHitLeft && !facing.FacingRight) {
 			facing.FacingRight = true;

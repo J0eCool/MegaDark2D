@@ -11,17 +11,14 @@ public class PlayerControl : JComponent {
 
 	[SerializeField] private float debugTrailTime = -1.0f;
 
+	[StartComponent] private SpritePhysics physics;
+	[StartComponent] private Facing facing;
+	[StartComponent] private PlayerMana mana;
+
 	private InputManager input;
-	private SpritePhysics physics;
-	private Facing facing;
-	private PlayerMana mana;
 
-	void Start() {
+	protected override void onStart() {
 		input = InputManager.Instance;
-
-		physics = GetComponent<SpritePhysics>();
-		facing = GetComponent<Facing>();
-		mana = GetComponent<PlayerMana>();
 
 		movement.Init(physics, input);
 	}

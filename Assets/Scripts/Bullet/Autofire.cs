@@ -6,12 +6,8 @@ public class Autofire : JComponent {
 	[SerializeField] private float shotsPerSecond = 3.0f;
 	[SerializeField] private GameObject bulletPrefab;
 
-	private Facing facing;
+	[StartComponent] private Facing facing;
 	private float shotTimer = 0.0f;
-
-	void Start() {
-		facing = GetComponent<Facing>();
-	}
 
 	void Update() {
 		shotTimer += Time.deltaTime;
