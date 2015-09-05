@@ -12,27 +12,19 @@ public class Bullet : JComponent, Collideable {
 
 	private SpritePhysics physics;
 	private float flownDist = 0.0f;
-	private GameObject shooter;
 
 	public int Damage { get { return damage; } }
 	public int ManaCost { get { return manaCost; } }
-	public GameObject Shooter { get { return shooter; } }
 
-	public static GameObject Create(GameObject prefab, GameObject createdAt,
-			Vector2 dir, GameObject shooter = null) {
-		if (shooter == null) {
-			shooter = createdAt;
-		}
+	public static GameObject Create(GameObject prefab, GameObject createdAt, Vector2 dir) {
 		GameObject bulletObj = GameObject.Instantiate(prefab);
 		bulletObj.transform.position = createdAt.transform.position;
 		Bullet bullet = bulletObj.GetComponent<Bullet>();
-		bullet.Init(shooter.gameObject, dir);
+		bullet.Init(dir);
 		return bulletObj;
 	}
 
-	public void Init(GameObject shooter, Vector2 dir) {
-		this.shooter = shooter;
-
+	public void Init(Vector2 dir) {
 		physics = GetComponent<SpritePhysics>();
 		Vector2 d = (dir + baseDir).normalized;
 		physics.Vel = speed * d;
@@ -53,11 +45,13 @@ public class Bullet : JComponent, Collideable {
 	}
 
 	public void OnCollide(CollisionData collision) {
-		if (collision.sender != shooter) {
-			Health health = collision.sender.GetComponent<Health>();
-			if (health == null || !health.IsInvincible()) {
-				Destroy();
-			}
+		Health health = collision.sender.GetComponent<Health>();
+		bool shouldDestroy = (health == null || !health.IsInvincible());
+		if (shouldDestroy) {
+			Destroy();
+		}
+		if (health != null) {
+			health.TakeDamage(Damage);
 		}
 	}
 }

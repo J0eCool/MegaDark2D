@@ -22,9 +22,9 @@ public abstract class Health : CappedAmount, Collideable {
 		GameObject.Destroy(gameObject);
 	}
 
-	public abstract void OnCollide(CollisionData collision);
+	public virtual void OnCollide(CollisionData collision) { }
 
-	protected void TakeDamage(int damage) {
+	public void TakeDamage(int damage) {
 		if (!IsInvincible()) {
 			Current -= damage;
 			flicker.BeginFlicker(invincibleTime);

@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70824785d999c0f4e9dcdbd6feadcdf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shotsPerSecond: .5
+  shotsPerSecond: .75
   bulletPrefab: {fileID: 124272, guid: 9d2d67d0536bc9646ae9ee57cdc25832, type: 2}
 --- !u!114 &11459992
 MonoBehaviour:
