@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shotsPerSecond: .75
-  bulletPrefab: {fileID: 124272, guid: 9d2d67d0536bc9646ae9ee57cdc25832, type: 2}
+  bulletPrefab: {fileID: 124272, guid: 67baddeea2064054a95ffdff4ba8ee11, type: 2}
 --- !u!114 &11459992
 MonoBehaviour:
   m_ObjectHideFlags: 1

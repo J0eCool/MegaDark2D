@@ -94,11 +94,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement:
     speed: 3.5999999
-    timeToMaxSpeed: .400000006
+    timeToMaxSpeed: .150000006
     oppositeDirectionMultiplier: 2
     releaseMultiplier: 1.25
-    offGroundMultiplier: .5
-  jumpHeight: 3
+    offGroundMultiplier: 1
+  jumpHeight: 2.5
   jumpReleaseDamping: .200000003
   bulletPrefab: {fileID: 124272, guid: 9d2d67d0536bc9646ae9ee57cdc25832, type: 2}
   specialBulletPrefab: {fileID: 171416, guid: de0615d3638a8b74ea0431a783f8e970, type: 2}

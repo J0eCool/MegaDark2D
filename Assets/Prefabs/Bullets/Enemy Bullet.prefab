@@ -14,8 +14,8 @@ GameObject:
   - 61: {fileID: 6141900}
   - 114: {fileID: 11411942}
   - 114: {fileID: 11470306}
-  m_Layer: 10
-  m_Name: Bullet
+  m_Layer: 12
+  m_Name: Enemy Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -92,7 +92,7 @@ MonoBehaviour:
   baseDir: {x: 0, y: 0}
   lockRotation: 0
   maxRange: 50
-  damage: 1
+  damage: 25
   manaCost: 0
 --- !u!114 &11467826
 MonoBehaviour:
