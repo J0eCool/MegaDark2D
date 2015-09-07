@@ -47,7 +47,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 4aa4620fa0f937e4f881815bb936451c, type: 2}
+  - {fileID: 2100000, guid: 7b8df278bf32c3647bd952d2fa6ce65b, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -76,11 +76,11 @@ BoxCollider2D:
   m_GameObject: {fileID: 194284}
   m_Enabled: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: .5, y: .75}
+  m_Size: {x: .75, y: 1}
 --- !u!114 &11406738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -143,9 +143,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fac570381f34f647b768dc5a5aa1364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collection: {fileID: 11496494, guid: f5f71cace81f18940a4588bb41d6c6e7, type: 2}
-  _color: {r: .176470578, g: .761460602, b: 1, a: 1}
-  _scale: {x: 1, y: 1.5, z: 1}
+  collection: {fileID: 11473566, guid: f5d922e35e0ec5e419bb6cd88b245d44, type: 2}
+  _color: {r: 1, g: 1, b: 1, a: 1}
+  _scale: {x: 1, y: 1, z: 1}
   _spriteId: 1
   boxCollider2D: {fileID: 6142276}
   polygonCollider2D: []
