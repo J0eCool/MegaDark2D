@@ -61,18 +61,18 @@ MonoBehaviour:
   forcedTextureWidth: 2048
   forcedTextureHeight: 2048
   textureCompression: 0
-  atlasWidth: 2
-  atlasHeight: 4
+  atlasWidth: 4
+  atlasHeight: 8
   forceSquareAtlas: 0
-  atlasWastage: 0
+  atlasWastage: 12.5
   allowMultipleAtlases: 0
   removeDuplicates: 1
   textureParams:
-  - name: 
+  - name: Bullet
     disableTrimming: 0
     additive: 0
     scale: {x: 1, y: 1, z: 1}
-    texture: {fileID: 0}
+    texture: {fileID: 2800000, guid: 80478793f9904fb4aa5b9a9c0884729d, type: 3}
     materialId: 0
     anchor: 4
     anchorX: 0
@@ -112,7 +112,7 @@ MonoBehaviour:
   - name: White
     disableTrimming: 0
     additive: 0
-    scale: {x: 25, y: 25, z: 1}
+    scale: {x: 4, y: 4, z: 1}
     texture: {fileID: 2800000, guid: 12b48adaad820624999da0cf503d6776, type: 3}
     materialId: 0
     anchor: 4
@@ -140,7 +140,7 @@ MonoBehaviour:
     regionW: 0
     regionH: 0
     regionId: 0
-    colliderType: 2
+    colliderType: 0
     colliderData: []
     boxColliderMin: {x: 0, y: 0}
     boxColliderMax: {x: 2, y: 2}
@@ -171,7 +171,7 @@ MonoBehaviour:
   sizeDef:
     type: 1
     orthoSize: 10
-    pixelsPerMeter: 100
+    pixelsPerMeter: 16
     width: 960
     height: 640
   globalScale: 1

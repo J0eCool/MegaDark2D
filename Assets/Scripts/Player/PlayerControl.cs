@@ -14,7 +14,6 @@ public class PlayerControl : JComponent {
 	[StartComponent] private SpritePhysics physics;
 	[StartComponent] private Facing facing;
 	[StartComponent] private PlayerMana mana;
-    [StartComponent] private tk2dSpriteAnimator animator;
 
 	private InputManager input;
 
@@ -30,7 +29,6 @@ public class PlayerControl : JComponent {
 		UpdateJumping();
 		UpdateShooting();
 		UpdateReset();
-        UpdateAnimation();
 
 		if (debugTrailTime > 0.0f) {
 			Debug.DrawLine(transform.position,
@@ -156,27 +154,4 @@ public class PlayerControl : JComponent {
 			Application.LoadLevel(Application.loadedLevel);
 		}
 	}
-
-    private bool isFiringAnimationPlaying = false;
-    private void UpdateAnimation() {
-        if (input.Shoot.DidPress) {
-            animator.Stop();
-            animator.Play("Shoot");
-            isFiringAnimationPlaying = true;
-            animator.AnimationCompleted = (x, y) => {
-                isFiringAnimationPlaying = false;
-                animator.AnimationCompleted = null;
-            };
-        }
-
-        if (isFiringAnimationPlaying) {
-            return;
-        }
-
-        if (Mathf.Abs(physics.Vel.x) > 0.1f) {
-            animator.Play("Run");
-        } else {
-            animator.Play("Idle");
-        }
-    }
 }

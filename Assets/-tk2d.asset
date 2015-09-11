@@ -23,13 +23,13 @@ MonoBehaviour:
     spriteCollectionGUID: df5324dc08d42f74c8dcca3a78b1be56
     spriteCollectionDataGUID: f5f71cace81f18940a4588bb41d6c6e7
     spriteNames:
-    - 
+    - Bullet
     - White
     spriteTextureGUIDs:
-    - 
+    - 80478793f9904fb4aa5b9a9c0884729d
     - 12b48adaad820624999da0cf503d6776
     spriteTextureTimeStamps:
-    - 0
+    - 1441932219.29596
     - 1436132201.56067
     managedSpriteCollection: 0
     loadable: 0

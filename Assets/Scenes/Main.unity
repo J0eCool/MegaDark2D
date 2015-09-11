@@ -1825,7 +1825,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!1001 &1798711079
 Prefab:
   m_ObjectHideFlags: 0
@@ -1863,7 +1863,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 408914, guid: 3f9a1cd1989b0914db43503b2d6d911b, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3348592, guid: 3f9a1cd1989b0914db43503b2d6d911b, type: 2}
       propertyPath: m_Mesh
