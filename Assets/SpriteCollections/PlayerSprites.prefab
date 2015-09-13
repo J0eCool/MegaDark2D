@@ -82,7 +82,7 @@ MonoBehaviour:
   atlasWidth: 64
   atlasHeight: 64
   forceSquareAtlas: 0
-  atlasWastage: 51.3427734
+  atlasWastage: 36.5478516
   allowMultipleAtlases: 0
   removeDuplicates: 1
   textureParams:
@@ -2742,7 +2742,7 @@ MonoBehaviour:
   disableTrimming: 0
   disableRotation: 0
   normalGenerationMode: 0
-  padAmount: -1
+  padAmount: 1
   autoUpdate: 1
   editorDisplayScale: 7.03000307
   version: 4

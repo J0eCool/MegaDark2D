@@ -61,10 +61,10 @@ MonoBehaviour:
   forcedTextureWidth: 2048
   forcedTextureHeight: 2048
   textureCompression: 0
-  atlasWidth: 4
-  atlasHeight: 8
+  atlasWidth: 8
+  atlasHeight: 16
   forceSquareAtlas: 0
-  atlasWastage: 12.5
+  atlasWastage: 50
   allowMultipleAtlases: 0
   removeDuplicates: 1
   textureParams:
@@ -188,7 +188,7 @@ MonoBehaviour:
   disableTrimming: 0
   disableRotation: 0
   normalGenerationMode: 0
-  padAmount: -1
+  padAmount: 1
   autoUpdate: 1
   editorDisplayScale: 12.3400087
   version: 4
