@@ -11,11 +11,11 @@ public class PlayerAnimator : JComponent {
 
     private InputManager input;
 
-    private bool isFiringAnimationPlaying = false;
-
     private bool isRunning = false;
     private bool isShooting = false;
     private bool isEyeShut = false;
+    private bool isJumping = false;
+    private bool isFalling = false;
 
     private float shotTimer = -1.0f;
 
@@ -45,6 +45,8 @@ public class PlayerAnimator : JComponent {
         isRunning = Mathf.Abs(physics.Vel.x) > 0.1f;
         isShooting = shotTimer > 0.0f;
         isEyeShut = shotTimer > totalShootTime() - shootEyeShutTime;
+        isJumping = physics.Vel.y * Physics2D.gravity.y < 0;
+        isFalling = physics.Vel.y * Physics2D.gravity.y > 0;
     }
 
     private void updateAnimation() {
@@ -57,22 +59,26 @@ public class PlayerAnimator : JComponent {
     }
 
     private string currentAnimationName() {
-        if (isRunning && isShooting && isEyeShut) {
+        if (isJumping && isShooting) {
+            return "Shoot Jump";
+        } else if (isJumping) {
+            return "Jump";
+        } else if (isFalling && isShooting) {
+            return "Shoot Fall";
+        } else if (isFalling) {
+            return "Fall";
+        } else if (isRunning && isShooting && isEyeShut) {
             return "Shut Shoot Run";
-        }
-        if (isRunning && isShooting) {
+        } else if (isRunning && isShooting) {
             return "Shoot Run";
-        }
-        if (isRunning) {
+        } else if (isRunning) {
             return "Run";
-        }
-
-        if (isShooting && isEyeShut) {
+        } else if (isShooting && isEyeShut) {
             return "Shut Shoot Stand";
-        }
-        if (isShooting) {
+        } else if (isShooting) {
             return "Shoot Stand";
+        } else {
+            return "Idle";
         }
-        return "Idle";
     }
 }

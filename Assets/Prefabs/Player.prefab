@@ -131,6 +131,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42d3e4a677e4ed041b716be63c0881a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootRaiseGunTime: .600000024
+  shootEyeShutTime: .200000003
 --- !u!114 &11435956
 MonoBehaviour:
   m_ObjectHideFlags: 1
