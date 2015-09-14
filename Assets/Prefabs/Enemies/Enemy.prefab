@@ -196,6 +196,7 @@ MonoBehaviour:
   ignoreGravity: 0
   ignoreTerrain: 0
   debugDrawRays: 0
+  vel: {x: 0, y: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

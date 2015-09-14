@@ -93,6 +93,7 @@ MonoBehaviour:
   ignoreGravity: 1
   ignoreTerrain: 0
   debugDrawRays: 0
+  vel: {x: 0, y: 0}
 --- !u!114 &11462812
 MonoBehaviour:
   m_ObjectHideFlags: 1

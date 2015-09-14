@@ -8,8 +8,12 @@ public class SpritePhysics : MonoBehaviour {
 	[SerializeField] private bool ignoreGravity = false;
 	[SerializeField] private bool ignoreTerrain = false;
 	[SerializeField] private bool debugDrawRays = false;
+    [SerializeField] private Vector2 vel;
 
-	public Vector2 Vel { get; set; }
+	public Vector2 Vel {
+        get { return vel; }
+        set { vel = value; }
+    }
 	public bool IsOnGround { get; private set; }
 
 	public bool DidHitLeft { get; private set; }
@@ -63,13 +67,13 @@ public class SpritePhysics : MonoBehaviour {
 		if (debugDrawRays) {
 			foreach (Vector3 offset in offsets) {
 				Vector3 origin = transform.position + offset;
-				Debug.DrawLine(origin, origin + (Vector3)Vel * Time.fixedDeltaTime, Color.green);
+				Debug.DrawLine(origin, origin + (Vector3)vel * Time.fixedDeltaTime, Color.green);
 			}
 		}
 	}
 
 	private void UpdatePosition() {
-		Vector2 v = Vel;
+		Vector2 v = vel;
 		if (!ignoreGravity) {
 			v += Physics2D.gravity * Time.fixedDeltaTime;
 		}
@@ -78,7 +82,7 @@ public class SpritePhysics : MonoBehaviour {
 
 		v.x = GoDir(new Vector2(v.x, 0)).x;
 		v.y = GoDir(new Vector2(0, v.y)).y;
-		Vel = v;
+		vel = v;
 	}
 
 	private void resetHitFlags(Vector2 v) {
