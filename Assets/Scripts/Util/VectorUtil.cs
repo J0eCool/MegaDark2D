@@ -9,4 +9,8 @@ public static class VectorUtil {
 	public static Vector2 Unit(float radians) {
 		return new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
 	}
+
+    public static Vector2 Mult(Vector2 a, Vector2 b) {
+        return new Vector2(a.x * b.x, a.y * b.y);
+    }
 }

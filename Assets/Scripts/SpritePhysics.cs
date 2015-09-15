@@ -100,20 +100,44 @@ public class SpritePhysics : MonoBehaviour {
 		bool isY = Mathf.Abs(v.y) > 0;
 		Vector3 toMove = v * Time.fixedDeltaTime;
 		RaycastHit2D? hit = FindCollision(toMove);
-		if (hit != null) {
-			setHitFlags(v);
-			v = Vector2.zero;
-			float d = Mathf.Max(hit.Value.distance - kEpsilon, 0.0f);
-			float s = Mathf.Sign(isY ? toMove.y : toMove.x);
-			float dist = s * d;
-			if (isY) {
-				toMove.y = dist;
-			}
-			else {
-				toMove.x = dist;
-			}
+        if (hit == null) {
+            transform.position += toMove;
+        } else {
+            if (debugDrawRays) {
+                float rad = toMove.magnitude;
+                Debug.DrawLine(transform.position, transform.position + toMove, Color.red);
+                DebugRender.Circle(rad, hit.Value.point, Color.red);
+            }
+
+            setHitFlags(v);
+            Vector2 dir = v.normalized;
+            v = Vector2.zero;
+
+            GameObject hitObj = hit.Value.transform.gameObject;
+            BoxCollider2D theirBox = hitObj.GetComponent<BoxCollider2D>();
+            SpritePhysics theirPhysics = hitObj.GetComponent<SpritePhysics>();
+
+            if (theirPhysics != null) {
+                v = theirPhysics.vel;
+            }
+
+            if (theirBox != null) {
+                Vector2 myEdge = (Vector2)transform.position + VectorUtil.Mult(dir, boxCollider.bounds.extents);
+                Vector2 theirEdge = (Vector2)hitObj.transform.position - VectorUtil.Mult(dir, theirBox.bounds.extents);
+                Vector3 delta = VectorUtil.Mult(dir, theirEdge - myEdge);
+                transform.position += delta;
+            } else {
+                float d = Mathf.Max(hit.Value.distance - kEpsilon, 0.0f);
+                float s = Mathf.Sign(isY ? toMove.y : toMove.x);
+                float dist = s * d;
+                if (isY) {
+                    toMove.y = dist;
+                } else {
+                    toMove.x = dist;
+                }
+                transform.position += toMove;
+            }
 		}
-		transform.position += toMove;
 		return v;
 	}
 
