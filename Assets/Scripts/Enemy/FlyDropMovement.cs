@@ -25,27 +25,39 @@ public class FlyDropMovement : MonoBehaviour {
 	}
 
     private void flyUpdate() {
-        GameObject player = PlayerManager.Instance.Player;
-        Vector3 playerPos = player.transform.position;
-        Vector3 delta = playerPos - transform.position;
         setVel(flySpeed, 0.0f);
 
-		possiblyStartFalling(delta);
+		possiblyStartFalling();
 	}
 
-	private void possiblyStartFalling(Vector3 delta) {
-		if (shouldFall(delta)) {
+	private void possiblyStartFalling() {
+		if (shouldFall()) {
 			isFalling = true;
 			setVel(0.0f, dropInitialSpeed);
 		}
 	}
 
+    private bool shouldFall() {
+        GameObject player = PlayerManager.Instance.Player;
+        SpritePhysics playerPhysics = player.GetComponent<SpritePhysics>();
+        Vector3 playerPos = player.transform.position;
+        Vector3 delta = playerPos - transform.position;
+
+        float t = timeToFallFromHeight(delta.y);
+
+        return (delta.x + t * playerPhysics.Vel.x) * flySpeed < 0.0f;
+    }
+
+    private float timeToFallFromHeight(float height) {
+        // Given h = v_0 * t + 1/2 * a * t^2 ,
+        // solve quadratic formula to find t = (-v_0 + sqrt(v_0^2 + 2*a*h)) / a
+        float v0 = dropInitialSpeed;
+        float a = dropAcceleration;
+        return (-v0 - Mathf.Sqrt(v0 * v0 + 2 * a * height)) / a;
+    }
+
     private void setVel(float x, float y) {
         physics.Vel = new Vector2(x, y);
-	}
-
-    private bool shouldFall(Vector3 delta) {
-		return delta.x * flySpeed < 0.0f;
 	}
 
     private void fallUpdate() {

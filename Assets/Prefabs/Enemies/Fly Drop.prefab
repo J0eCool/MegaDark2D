@@ -157,8 +157,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flySpeed: -3
-  dropInitialSpeed: -5
-  dropAcceleration: -25
+  dropInitialSpeed: 2.5
+  dropAcceleration: -70
 --- !u!114 &11462108
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -178,7 +178,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: dropAcceleration
+      value: -70
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: dropInitialSpeed
+      value: 2.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 153078}
