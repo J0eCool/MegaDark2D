@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class SpritePhysics : MonoBehaviour {
-    [SerializeField] private int numHorizontalRays = 3;
     [SerializeField] private int numVerticalRays = 3;
+    [SerializeField] private int numHorizontalSegments = 3;
     [SerializeField] private bool ignoreGravity = false;
     [SerializeField] private bool ignoreTerrain = false;
     [SerializeField] private bool debugDrawRays = false;
@@ -22,13 +22,23 @@ public class SpritePhysics : MonoBehaviour {
     public bool DidHitDown { get; private set; }
 
     private BoxCollider2D boxCollider;
-    private List<Vector2> offsets = new List<Vector2>();
+    private List<Offset> offsets = new List<Offset>();
     private List<Collideable> collisionListeners = new List<Collideable>();
 
     private HashSet<GameObject> collidedObjects = new HashSet<GameObject>();
 
     private const float kEpsilon = 0.001f;
     private static HashSet<int> physicallyCollidingLayers = null;
+
+    private struct Offset {
+        public Vector3 position;
+        public Vector2 normal;
+
+        public Offset(Vector3 position, Vector2 normal) {
+            this.position = position;
+            this.normal = normal;
+        }
+    }
 
     void Awake() {
         if (physicallyCollidingLayers == null) {
@@ -41,17 +51,17 @@ public class SpritePhysics : MonoBehaviour {
         IsOnGround = false;
         boxCollider = GetComponent<BoxCollider2D>();
 
-        for (int i = 0; i < numHorizontalRays; i++) {
-            float x = boxCollider.bounds.extents.x * (2 * i - numHorizontalRays + 1) / (numHorizontalRays - 1);
+        for (int i = 0; i < numHorizontalSegments; i++) {
+            float x = boxCollider.bounds.extents.x * (2 * i - numHorizontalSegments + 1) / (numHorizontalSegments - 1);
             float y = boxCollider.bounds.extents.y;
-            offsets.Add(new Vector2(x, y));
-            offsets.Add(new Vector2(x, -y));
+            offsets.Add(new Offset(new Vector2(x, y), new Vector2(0.0f, 1.0f)));
+            offsets.Add(new Offset(new Vector2(x, -y), new Vector2(0.0f, -1.0f)));
         }
-        for (int i = 1; i < numVerticalRays - 1; i++) {
+        for (int i = 0; i < numVerticalRays; i++) {
             float x = boxCollider.bounds.extents.x;
             float y = boxCollider.bounds.extents.y * (2 * i - numVerticalRays + 1) / (numVerticalRays - 1);
-            offsets.Add(new Vector2(x, y));
-            offsets.Add(new Vector2(-x, y));
+            offsets.Add(new Offset(new Vector2(x, y), new Vector2(1.0f, 0.0f)));
+            offsets.Add(new Offset(new Vector2(-x, y), new Vector2(-1.0f, 0.0f)));
         }
 
         var listeners = GetComponents<Collideable>();
@@ -63,13 +73,6 @@ public class SpritePhysics : MonoBehaviour {
     void FixedUpdate() {
         UpdatePosition();
         FlushHitMessages();
-
-        if (debugDrawRays) {
-            foreach (Vector3 offset in offsets) {
-                Vector3 origin = transform.position + offset;
-                Debug.DrawLine(origin, origin + (Vector3)vel * Time.fixedDeltaTime, Color.green);
-            }
-        }
     }
 
     private void UpdatePosition() {
@@ -108,9 +111,12 @@ public class SpritePhysics : MonoBehaviour {
                 DebugRender.Circle(rad, p, Color.red);
             }
 
+            Vector3 sizeOffset = VectorUtil.Mult(boxCollider.bounds.extents, v.normalized);
+
             setHitFlags(v);
             v = Vector2.zero;
-            float d = Mathf.Max(hit.Value.distance - kEpsilon, 0.0f);
+
+            float d = Mathf.Max(hit.Value.distance - kEpsilon - sizeOffset.magnitude, 0.0f);
             float s = Mathf.Sign(isY ? toMove.y : toMove.x);
             float dist = s * d;
             if (isY) {
@@ -143,9 +149,32 @@ public class SpritePhysics : MonoBehaviour {
 
     private RaycastHit2D? FindCollision(Vector3 toMove) {
         RaycastHit2D? minHit = null;
-        foreach (Vector3 offset in offsets) {
-            Vector3 origin = transform.position + offset;
-            RaycastHit2D[] hits = Physics2D.RaycastAll(origin, toMove.normalized, toMove.magnitude);
+        Vector3 dir = toMove.normalized;
+        foreach (Offset offset in offsets) {
+            bool doCollide = true;
+            if (Vector2.Dot(offset.normal, toMove) <= kEpsilon) {
+                doCollide = false;
+            }
+
+            if (debugDrawRays) {
+                Vector3 offsetPos = offset.position + transform.position;
+                Color drawColor = doCollide ? Color.magenta : Color.grey;
+                DebugRender.Circle(0.1f, offsetPos, drawColor);
+                Debug.DrawLine(offsetPos, offsetPos + (Vector3)offset.normal * 0.2f, drawColor);
+            }
+            if (!doCollide) {
+                continue;
+            }
+
+            Vector3 sizeOffset = VectorUtil.Mult(boxCollider.bounds.extents, offset.normal);
+            Vector3 origin = transform.position + offset.position - sizeOffset;
+            Vector3 moveDelta = toMove + sizeOffset;
+            RaycastHit2D[] hits = Physics2D.RaycastAll(origin, dir, moveDelta.magnitude);
+
+            if (debugDrawRays) {
+                Debug.DrawLine(origin, origin + moveDelta, Color.green);
+            }
+
             foreach (var hit in hits) {
                 var hitObj = hit.collider.gameObject;
                 if (CanCollideLogically(hitObj)) {

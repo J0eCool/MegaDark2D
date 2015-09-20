@@ -116,8 +116,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07ed95c4f39ddef4b9e4bc76ee1d8417, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numHorizontalRays: 3
   numVerticalRays: 3
+  numHorizontalSegments: 3
   ignoreGravity: 0
   ignoreTerrain: 0
   debugDrawRays: 1
