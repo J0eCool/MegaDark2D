@@ -50,7 +50,7 @@ public class FlyDropMovement : MonoBehaviour {
 
     private float timeToFallFromHeight(float height) {
         // Given h = v_0 * t + 1/2 * a * t^2 ,
-        // solve quadratic formula to find t = (-v_0 + sqrt(v_0^2 + 2*a*h)) / a
+        // solve quadratic formula to find t = (-v_0 - sqrt(v_0^2 + 2*a*h)) / a
         float v0 = dropInitialSpeed;
         float a = dropAcceleration;
         return (-v0 - Mathf.Sqrt(v0 * v0 + 2 * a * height)) / a;
