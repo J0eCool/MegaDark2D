@@ -93,7 +93,7 @@ MonoBehaviour:
   lockRotation: 0
   maxRange: 50
   damage: 1
-  manaCost: 0
+  manaCost: 7
 --- !u!114 &11467826
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -144,6 +144,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: _spriteId
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: manaCost
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

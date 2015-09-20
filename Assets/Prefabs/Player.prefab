@@ -19,6 +19,7 @@ GameObject:
   - 114: {fileID: 11435956}
   - 114: {fileID: 11490846}
   - 114: {fileID: 11431480}
+  - 114: {fileID: 11431494}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -33,7 +34,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 194284}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.30999994, y: -7.26999998, z: -10}
+  m_LocalPosition: {x: -5.11000013, y: -7.05999994, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -81,7 +82,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: .75, y: 1}
+  m_Size: {x: .75, y: .949999988}
 --- !u!114 &11406738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -119,7 +120,7 @@ MonoBehaviour:
   numVerticalRays: 3
   ignoreGravity: 0
   ignoreTerrain: 0
-  debugDrawRays: 0
+  debugDrawRays: 1
   vel: {x: 0, y: 0}
 --- !u!114 &11431480
 MonoBehaviour:
@@ -134,6 +135,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootRaiseGunTime: .600000024
   shootEyeShutTime: .200000003
+--- !u!114 &11431494
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 194284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5e54113e5604435b8ae87c7754f2725, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  library: {fileID: 11456794, guid: eb6abb56e48d2004783b53b525b30288, type: 2}
+  defaultClipId: 0
+  playAutomatically: 1
 --- !u!114 &11435956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -145,8 +160,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a49911665c0804eb0fc6467dd60d3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAmount: 100
-  regenPerSecond: 7.5
+  maxAmount: 60
+  regenPerSecond: 12
 --- !u!114 &11446862
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -161,7 +176,7 @@ MonoBehaviour:
   collection: {fileID: 11473566, guid: f5d922e35e0ec5e419bb6cd88b245d44, type: 2}
   _color: {r: 1, g: 1, b: 1, a: 1}
   _scale: {x: 1, y: 1, z: 1}
-  _spriteId: 1
+  _spriteId: 0
   boxCollider2D: {fileID: 6142276}
   polygonCollider2D: []
   edgeCollider2D: []
@@ -214,7 +229,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: maxAmount
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: regenPerSecond
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 194284}

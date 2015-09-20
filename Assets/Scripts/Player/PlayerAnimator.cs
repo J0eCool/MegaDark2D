@@ -44,7 +44,8 @@ public class PlayerAnimator : JComponent {
     private void updateFlags() {
         isRunning = Mathf.Abs(physics.Vel.x) > 0.1f;
         isShooting = shotTimer > 0.0f;
-        isEyeShut = shotTimer > totalShootTime() - shootEyeShutTime;
+        // TODO: re-enable this when we have more than one level
+        //isEyeShut = shotTimer > totalShootTime() - shootEyeShutTime;
         isJumping = physics.Vel.y * Physics2D.gravity.y < 0;
         isFalling = physics.Vel.y * Physics2D.gravity.y > 0;
     }
